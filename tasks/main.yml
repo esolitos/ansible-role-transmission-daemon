@@ -26,8 +26,8 @@
     owner: debian-transmission
     group: debian-transmission
   with_items:
-    - "{{ download_dir }}"
-    - "{{ incomplete_dir }}"
+    - "{{ transmissiond_download_dir }}"
+    - "{{ transmissiond_incomplete_dir }}"
 
 - name: "transmission-daemon - Ensure running"
   service:
