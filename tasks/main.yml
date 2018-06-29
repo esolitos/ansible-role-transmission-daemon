@@ -2,6 +2,7 @@
 
 - name: "transmission-remote - Ensure latest installed"
   apt:
+    update_cache: true
     pkg: transmission-remote-cli
     state: latest
 
