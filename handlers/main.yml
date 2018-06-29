@@ -1,0 +1,6 @@
+---
+
+- name: "transmission-daemon - reload"
+  service:
+    name: transmission-daemon
+    state: reloaded

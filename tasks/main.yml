@@ -1,0 +1,36 @@
+---
+
+- name: "transmission-remote - Ensure latest installed"
+  apt:
+    pkg: transmission-remote
+    state: latest
+
+- name: "transmission-daemon - Ensure latest installed"
+  apt:
+    pkg: transmission-daemon
+    state: latest
+
+- name: "transmission-daemon - Create settings file"
+  template:
+    src: settings.json.j2
+    dest: /etc/transmission-daemon/settings.json
+    owner: debian-transmission
+    group: debian-transmission
+    mode: 0600
+    vars: "{{ transd_config }}"
+  notify: "transmission-daemon - reload"
+
+- name: "transmission-daemon - Ensure directories"
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: debian-transmission
+    group: debian-transmission
+  with_items:
+    - "{{ download_dir }}"
+    - "{{ incomplete_dir }}"
+
+- name: "transmission-daemon - Ensure running"
+  service:
+    name: transmission-daemon
+    state: started
