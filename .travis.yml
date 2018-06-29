@@ -33,9 +33,8 @@ script:
   # Check if transmission is listenning
   - sudo lsof -i :9091 | grep "LISTEN" | grep 'transmission'
   
-  # Check connection
+  # Check connection via transmission-remote
   - transmission-remote  -n 'transmission:transmission' -l 
-
 
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
