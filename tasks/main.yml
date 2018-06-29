@@ -2,7 +2,7 @@
 
 - name: "transmission-remote - Ensure latest installed"
   apt:
-    pkg: transmission-remote
+    pkg: transmission-remote-cli
     state: latest
 
 - name: "transmission-daemon - Ensure latest installed"
