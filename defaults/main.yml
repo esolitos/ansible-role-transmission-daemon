@@ -1,71 +1,70 @@
 ---
-transd_config:
-  alt_speed_down: 102400
-  alt_speed_enabled: false
-  alt_speed_time_begin: 0
-  alt_speed_time_day: 0
-  alt_speed_time_enabled: false
-  alt_speed_time_end: 0
-  alt_speed_up: 102400
-  bind_address_ipv4: "0.0.0.0"
-  bind_address_ipv6: "::"
-  blocklist_enabled: false
-  blocklist_url: "http://www.example.com/blocklist"
-  cache_size_mb: 64
-  dht_enabled: false
-  download_dir: "/var/lib/transmission-daemon/downloads"
-  download_limit: 0
-  download_limit_enabled: 0
-  download_queue_enabled: true
-  download_queue_size: 5
-  encryption: 1
-  idle_seeding_limit: 30
-  idle_seeding_limit_enabled: false
-  incomplete_dir: "/var/lib/transmission-daemon/incomplete"
-  incomplete_dir_enabled: true
-  lpd_enabled: false
-  max_peers_global: 500
-  message_level: 1
-  peer_congestion_algorithm: ""
-  peer_id_ttl_hours: 6
-  peer_limit_global: 500
-  peer_limit_per_torrent: 50
-  peer_port: 54812
-  peer_port_random_high: 65000
-  peer_port_random_low: 50000
-  peer_port_random_on_start: false
-  peer_socket_tos: "default"
-  pex_enabled: true
-  port_forwarding_enabled: false
-  preallocation: 1
-  prefetch_enabled: 1
-  queue_stalled_enabled: true
-  queue_stalled_minutes: 1440
-  ratio_limit: 10
-  ratio_limit_enabled: false
-  rename_partial_files: true
-  rpc_authentication_required: true
-  rpc_bind_address: "0.0.0.0"
-  rpc_enabled: true
-  rpc_password: "{62b16db87b89a91dd49a5110a7cafc06d20eb4f2wtK6kqPj"
-  rpc_port: 9091
-  rpc_url: "/transmission/"
-  rpc_username: "transmission"
-  rpc_whitelist: "127.0.0.1"
-  rpc_whitelist_enabled: true
-  scrape_paused_torrents_enabled: true
-  script_torrent_done_enabled: false
-  script_torrent_done_filename: ""
-  seed_queue_enabled: false
-  seed_queue_size: 10
-  speed_limit_down: 100
-  speed_limit_down_enabled: false
-  speed_limit_up: 100
-  speed_limit_up_enabled: false
-  start_added_torrents: true
-  trash_original_torrent_files: false
-  umask: 2
-  upload_limit: 100
-  upload_limit_enabled: 0
-  upload_slots_per_torrent: 14
-  utp_enabled: true
+transmissiond_alt_speed_down: 102400
+transmissiond_alt_speed_enabled: false
+transmissiond_alt_speed_time_begin: 0
+transmissiond_alt_speed_time_day: 0
+transmissiond_alt_speed_time_enabled: false
+transmissiond_alt_speed_time_end: 0
+transmissiond_alt_speed_up: 102400
+transmissiond_bind_address_ipv4: "0.0.0.0"
+transmissiond_bind_address_ipv6: "::"
+transmissiond_blocklist_enabled: false
+transmissiond_blocklist_url: "http://www.example.com/blocklist"
+transmissiond_cache_size_mb: 64
+transmissiond_dht_enabled: false
+transmissiond_download_dir: "/var/lib/transmission-daemon/downloads"
+transmissiond_download_limit: 0
+transmissiond_download_limit_enabled: 0
+transmissiond_download_queue_enabled: true
+transmissiond_download_queue_size: 5
+transmissiond_encryption: 1
+transmissiond_idle_seeding_limit: 30
+transmissiond_idle_seeding_limit_enabled: false
+transmissiond_incomplete_dir: "/var/lib/transmission-daemon/incomplete"
+transmissiond_incomplete_dir_enabled: true
+transmissiond_lpd_enabled: false
+transmissiond_max_peers_global: 500
+transmissiond_message_level: 1
+transmissiond_peer_congestion_algorithm: ""
+transmissiond_peer_id_ttl_hours: 6
+transmissiond_peer_limit_global: 500
+transmissiond_peer_limit_per_torrent: 50
+transmissiond_peer_port: 54812
+transmissiond_peer_port_random_high: 65000
+transmissiond_peer_port_random_low: 50000
+transmissiond_peer_port_random_on_start: false
+transmissiond_peer_socket_tos: "default"
+transmissiond_pex_enabled: true
+transmissiond_port_forwarding_enabled: false
+transmissiond_preallocation: 1
+transmissiond_prefetch_enabled: 1
+transmissiond_queue_stalled_enabled: true
+transmissiond_queue_stalled_minutes: 1440
+transmissiond_ratio_limit: 10
+transmissiond_ratio_limit_enabled: false
+transmissiond_rename_partial_files: true
+transmissiond_rpc_authentication_required: true
+transmissiond_rpc_bind_address: "0.0.0.0"
+transmissiond_rpc_enabled: true
+transmissiond_rpc_password: "{62b16db87b89a91dd49a5110a7cafc06d20eb4f2wtK6kqPj"
+transmissiond_rpc_port: 9091
+transmissiond_rpc_url: "/transmission/"
+transmissiond_rpc_username: "transmission"
+transmissiond_rpc_whitelist: "127.0.0.1"
+transmissiond_rpc_whitelist_enabled: true
+transmissiond_scrape_paused_torrents_enabled: true
+transmissiond_script_torrent_done_enabled: false
+transmissiond_script_torrent_done_filename: ""
+transmissiond_seed_queue_enabled: false
+transmissiond_seed_queue_size: 10
+transmissiond_speed_limit_down: 100
+transmissiond_speed_limit_down_enabled: false
+transmissiond_speed_limit_up: 100
+transmissiond_speed_limit_up_enabled: false
+transmissiond_start_added_torrents: true
+transmissiond_trash_original_torrent_files: false
+transmissiond_umask: 2
+transmissiond_upload_limit: 100
+transmissiond_upload_limit_enabled: 0
+transmissiond_upload_slots_per_torrent: 14
+transmissiond_utp_enabled: true

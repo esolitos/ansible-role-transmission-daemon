@@ -17,7 +17,6 @@
     owner: debian-transmission
     group: debian-transmission
     mode: 0600
-    vars: "{{ transd_config }}"
   notify: "transmission-daemon - reload"
 
 - name: "transmission-daemon - Ensure directories"
