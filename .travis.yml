@@ -1,40 +1,28 @@
 ---
-# Test this transmission-daemon role using travis CI
-# @see https://www.jeffgeerling.com/blog/testing-ansible-roles-travis-ci-github
+# Test this transmission-daemon role using travis CI and docker
+# @see https://www.jeffgeerling.com/blog/2018/how-i-test-ansible-configuration-on-7-different-oses-docker
+# We need sudo for some of the Docker commands.
+sudo: required
 
-language: python
-python: "2.7"
+env:
+  - distro: centos7
+  - distro: centos6
+  - distro: ubuntu1804
+  - distro: ubuntu1604
+  - distro: debian8
+  - distro: debian9
 
-before_install:
-  # Make sure everything's up to date.
-  - sudo apt-get update -qq
-
-install:
-  # Install Ansible.
-  - pip install ansible
-
-  # Add ansible.cfg to pick up roles path.
-  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
-
+# Tell Travis to start Docker when it brings up an environment.
+services:
+  - docker
+  
 script:
-  # Check the role/playbook's syntax.
-  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ${PWD}/tests/test.sh
 
-  # Run the role/playbook with ansible-playbook.
-  - ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
-  
-  # Run the role/playbook again, checking to make sure it's idempotent.
-  - >
-    ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
-
-  # Check if transmission is listenning
-  - sudo lsof -i :9091 | grep "LISTEN" | grep 'transmission'
-  
-  # Check connection via transmission-remote
-  - transmission-remote  -n 'transmission:transmission' -l 
+  # Run tests.
+  - ${PWD}/tests/test.sh
 
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
