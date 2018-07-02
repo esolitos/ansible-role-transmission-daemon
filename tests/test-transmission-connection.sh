@@ -20,6 +20,7 @@ check-transmission-port() {
     
     case $tool in
     ss)
+        ss -ltnp
         ss -ltnp sport = ":${port}" | grep -q 'transmission'
         ;;
     lsof)
@@ -63,9 +64,10 @@ is-transmission-listening() {
             retry_time=$(($retry_time + 5))
         else
             # If wait time is above the timeout, bail out.
-            break -1
+            false
+            break
         fi
-    done
+    done || exit 1
 }
 
 ###############
