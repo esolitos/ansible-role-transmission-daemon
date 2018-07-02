@@ -11,12 +11,15 @@ TRANSMISSION_RPC_PORT=9091
 
 # Check if transmission is listening on the RPC port.
 if [[ ! -z "$(which lsof)" ]]; then
+    tool="lsof"
     lsof -i ":${TRANSMISSION_RPC_PORT}" | grep "LISTEN" | grep -q 'transmission'
     status="$?"
 elif [[ ! -z "$(which netstat)" ]]; then
+    tool="netstat"
     netstat -pln | grep "$TRANSMISSION_RPC_PORT" | grep "LISTEN" | grep -q 'transmission'
     status="$?"
 elif [[ ! -z "$(which ss)" ]]; then
+    tool="ss"
     ss -tpl | grep "$TRANSMISSION_RPC_PORT" | grep "LISTEN" | grep -q 'transmission'
     status="$?"
 else
@@ -25,10 +28,10 @@ else
 fi
 
 if [[ $status -ne 0 ]]; then
-    printf "\n${RED}transmission-daemon - NOT listening on port: ${TRANSMISSION_RPC_PORT}${NEUTRAL}\n\n"
+    printf "\n${RED}transmission-daemon - NOT listening on port: ${TRANSMISSION_RPC_PORT} (Via ${tool})${NEUTRAL}\n\n"
     exit 1
 else
-    printf "\n${GREEN}transmission-daemon - listening on: ${TRANSMISSION_RPC_PORT}${NEUTRAL}\n\n"
+    printf "\n${GREEN}transmission-daemon - listening on: ${TRANSMISSION_RPC_PORT} (Via ${tool})${NEUTRAL}\n\n"
 fi
 
 # Check for Transmission Remote executable
@@ -39,6 +42,7 @@ fi
 
 # Check for connection
 transmission-remote  -n 'transmission:transmission' -l >/dev/null
+
 if [[ $? -ne 0 ]]; then
     printf "\n${RED}transmission-remote - UNABLE TO CONNECT to the daemon.${NEUTRAL}\n\n"
     exit 1
