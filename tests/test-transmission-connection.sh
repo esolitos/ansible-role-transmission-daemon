@@ -63,7 +63,7 @@ is-transmission-listening() {
             retry_time=$(($retry_time + 5))
         else
             # If wait time is above the timeout, bail out.
-            exit 1
+            break -1
         fi
     done
 }
