@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Tests if the transmission daemon is up and running.
 
 # Colors
@@ -9,30 +9,50 @@ NEUTRAL='\033[0m'
 # Config
 TRANSMISSION_RPC_PORT=9091
 
+check-transmission-port() {
+    case $1 in
+    ss)
+        ss -ltnp sport = ":${TRANSMISSION_RPC_PORT}" | grep -q 'transmission'
+        ;;
+    lsof)
+        lsof -i "tcp:${TRANSMISSION_RPC_PORT}" | grep "LISTEN" | grep -q 'transmission'
+        ;;
+    *)
+        printf "\n\n${RED}Unsupported port detection tool: %s ${NEUTRAL}\n" $1
+        exit 1
+    esac
+}
+
 # Check if transmission is listening on the RPC port.
-if [[ ! -z "$(which lsof)" ]]; then
-    tool="lsof"
-    lsof -i ":${TRANSMISSION_RPC_PORT}" | grep "LISTEN" | grep -q 'transmission'
-    status="$?"
-elif [[ ! -z "$(which netstat)" ]]; then
-    tool="netstat"
-    netstat -pln | grep "$TRANSMISSION_RPC_PORT" | grep "LISTEN" | grep -q 'transmission'
-    status="$?"
-elif [[ ! -z "$(which ss)" ]]; then
-    tool="ss"
-    ss -tpl | grep "$TRANSMISSION_RPC_PORT" | grep "LISTEN" | grep -q 'transmission'
-    status="$?"
+if hash ss 2>/dev/null; then
+    portmap_tool="ss"
+elif hash lsof 2>/dev/null; then
+    portmap_tool="lsof"
 else
     printf "\n${RED}Unable to find any suitable commant to test for listening processes.${NEUTRAL}\n\n"
     exit 1
 fi
 
-if [[ $status -ne 0 ]]; then
-    printf "\n${RED}transmission-daemon - NOT listening on port: ${TRANSMISSION_RPC_PORT} (Via ${tool})${NEUTRAL}\n\n"
-    exit 1
-else
-    printf "\n${GREEN}transmission-daemon - listening on: ${TRANSMISSION_RPC_PORT} (Via ${tool})${NEUTRAL}\n\n"
-fi
+# Try to check if the daemon is ready and listening, give it up to 60 seconds
+# to come up after the playbook is finished.
+retry_time=0
+while true; do
+    if check-transmission-port "${portmap_tool}"; then
+        # Break the loop if we get a positive result
+        break
+    else
+        printf "\n${GREEN}transmission-daemon - ${RED}NOT listening on tcp/${TRANSMISSION_RPC_PORT}${NEUTRAL} after ${retry_time} seconds. (Test via: ${portmap_tool})\n\n"
+    fi
+    # If we encountered a failure check if the TTL is exceded,
+    if [[ $retry_time -gt 60 ]]; then
+        printf "\n${GREEN}transmission-daemon - ${RED}Aborting due to timeout.${NEUTRAL}\n\n"
+        exit 1
+    else
+        # if not out-of-time sleep for 5 more seconds and try another time.
+        sleep 5
+        retry_time=$(($retry_time + 5))
+    fi
+done
 
 # Check for Transmission Remote executable
 if [[ -z $(which transmission-remote) ]]; then
