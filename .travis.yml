@@ -1,17 +1,14 @@
 ---
 # Test this transmission-daemon role using travis CI and docker
 # @see https://www.jeffgeerling.com/blog/2018/how-i-test-ansible-configuration-on-7-different-oses-docker
-# We need sudo for some of the Docker commands.
-sudo: required
+services: docker
 
 env:
-  - distro: debian8
+  - distro: ubuntu1804
+  - distro: ubuntu1604
   - distro: debian9
+  - distro: debian8
 
-# Tell Travis to start Docker when it brings up an environment.
-services:
-  - docker
-  
 script:
   # Download test shim.
   - wget -O ${PWD}/tests/test-ansible-role.sh https://raw.githubusercontent.com/esolitos/gists/master/shell/test-ansible-role.sh

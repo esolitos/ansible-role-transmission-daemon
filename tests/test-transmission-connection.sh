@@ -64,32 +64,31 @@ is-transmission-listening() {
             retry_time=$(($retry_time + 5))
         else
             # If wait time is above the timeout, bail out.
-            false
-            break
+            return 1
         fi
-    done || exit 1
+    done
 }
 
 ###############
 #     MAIN    #
 ###############
 
-is-transmission-listening "${TRANSMISSION_RPC_PORT}"
-if [[ $? -ne 0 ]]; then
+
+if ! is-transmission-listening "${TRANSMISSION_RPC_PORT}"; then
     printf "\n${GREEN}transmission-daemon - ${RED}Transmission daemon not listening after timeout.${NEUTRAL}\n\n"
     exit 1
 fi
 
 # Check for Transmission Remote executable
-if hash transmission-remote 2>/dev/null; then
+if ! hash transmission-remote 2>/dev/null; then
     printf "\n${RED}Unable to find transmission-remote.${NEUTRAL}\n\n"
     exit 1
 fi
 
 # Check for connection via transmission-remote
 if transmission-remote  -n "${TRANSMISSION_RPC_AUTH}" -l >/dev/null; then
+    printf "\n${GREEN}transmission-remote - successfully connected to the daemon.${NEUTRAL}\n\n"
+else
     printf "\n${RED}transmission-remote - UNABLE TO CONNECT to the daemon.${NEUTRAL}\n\n"
     exit 1
-else
-    printf "\n${GREEN}transmission-remote - successfully connected to the daemon.${NEUTRAL}\n\n"
 fi
