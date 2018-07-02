@@ -1,0 +1,26 @@
+---
+
+dependencies: []
+
+galaxy_info:
+  author: esolitos
+  description: "Configurable Ansible role for transmission-daemon on Debian/Ubuntu systems"
+  license: "MIT"
+  min_ansible_version: 2.0
+  platforms:
+    - name: Debian
+      versions:
+      - wheezy
+      - jessie
+      - stretch
+      - sid
+    - name: Ubuntu
+      versions:
+      - precise
+      - trusty
+      - vivid
+      - xenial
+      - yakkety
+  galaxy_tags:
+    - networking
+    
