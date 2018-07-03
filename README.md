@@ -1,8 +1,9 @@
-# ansible role: Transmission Deamon
+# ansible role: `esolitos.transmissiond`
 
-[![Build Status](https://travis-ci.org/esolitos/ansible-transmission-daemon.svg?branch=master)](https://travis-ci.org/esolitos/ansible-transmission-daemon)
+[![Build Status](https://travis-ci.org/esolitos/ansible-role-transmission-daemon.svg?branch=master)](https://travis-ci.org/esolitos/ansible-role-transmission-daemon)
 
-An Ansible Role that installs transmission-daemon and transmission-remote.
+An Ansible Role that installs and configured transmission-daemon and the cli tool 
+transmission-remote.
 Tested on Debian/Ubuntu.
 
 **IMPORTANT:** It is _strongly recomended_ to change the default RPC user and
