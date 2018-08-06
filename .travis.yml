@@ -17,5 +17,5 @@ script:
   # Run tests.
   - ${PWD}/tests/test-ansible-role.sh -d $distro --skip-idempotent --extra-test "${PWD}/tests/test-transmission-connection.sh"
 
-# notifications:
-#   webhooks: https://galaxy.ansible.com/api/v1/notifications/
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
